@@ -6,6 +6,23 @@
 - ✅ Hello-Gemini call working — see [Day1_Setup.ipynb](Day1_Setup.ipynb)
 - 4-tool comparison matrix from Lab 1A: see screenshot below
 - <img width="695" height="282" alt="image" src="https://github.com/user-attachments/assets/f894d8e5-68ab-4a72-ba2b-5bed265861ef" />
+## Day 2 Lab 2B — Errors handled
+
+1. **Markdown fence wrapping** (`\`\`\`json ... \`\`\``)
+   The retry prompt asks Gemini to output raw JSON without fences. Triggers on ~5-10% of calls.
+
+2. **Hallucinated phone number when source has none**
+   `Optional[str] = None` in Pydantic — model returns `null`, schema validates.
+
+3. **Empty / whitespace-only input**
+   Pydantic raises ValidationError with "Field required". Caller catches.
+
+## Sample résumés processed: 3 / 3 successful
+```
+
+Push to GitHub: `Day2_ResumeExtractor.ipynb` + updated README.
+
+
 ## Day 4 — Productivity sprint
 
 **Company:** <TCS>
