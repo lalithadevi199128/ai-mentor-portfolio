@@ -64,3 +64,11 @@ Push to GitHub: `Day2_ResumeExtractor.ipynb` + updated README.
 
 **Hallucination on garbage input:** Gemini sometimes invents a plausible résumé from non-résumé text. Defence: validate input before sending (e.g., minimum length, presence of email-like pattern).
 ```
+## Day 7 Lab 7A — ChromaDB Hello-World
+
+- Embedded 10 CSE Sem 5 paragraphs with all-MiniLM-L6-v2 (384-dim, free)
+- Indexed in persistent ChromaDB collection `hello_syllabus`
+- Ran 3 semantic queries — observed: top-1 match is relevant when query topic is in corpus, irrelevant when not
+- Plotted PCA 2D — visible OS / DBMS clusters
+
+**Reflection:** Semantic search returns nearest, not exact. RAG must enforce citations to catch out-of-corpus queries (this afternoon's Sprint 2).
