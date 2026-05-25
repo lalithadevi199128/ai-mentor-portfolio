@@ -22,9 +22,6 @@
 
 Push to GitHub: `Day2_ResumeExtractor.ipynb` + updated README.
 
-
-
-
 ## Day 4 — Productivity sprint
 
 **Company:** <TCS>
