@@ -18,7 +18,7 @@
    Pydantic raises ValidationError with "Field required". Caller catches.
 
 ## Sample résumés processed: 3 / 3 successful
-```
+
 
 Push to GitHub: `Day2_ResumeExtractor.ipynb` + updated README.
 
@@ -73,7 +73,7 @@ Push to GitHub: `Day2_ResumeExtractor.ipynb` + updated README.
    Pydantic raises ValidationError with "Field required". Caller catches.
 
 **Hallucination on garbage input:** Gemini sometimes invents a plausible résumé from non-résumé text. Defence: validate input before sending (e.g., minimum length, presence of email-like pattern).
-```
+
 ## Day 7 Lab 7A — ChromaDB Hello-World
 
 - Embedded 10 CSE Sem 5 paragraphs with all-MiniLM-L6-v2 (384-dim, free)
