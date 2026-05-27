@@ -1,0 +1,173 @@
+{
+  "name": "My workflow 3 copy",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://news.ycombinator.com/rss",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0422f053-e0ba-4a60-89a0-691a01a8a78f",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "14bf971d-58a9-46be-9a58-4d2f6c7dccaa",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"{{ 'Summarise these RSS items into 5 bullets for a placement coach. Each bullet ≤ 20 words. Highlight any item signalling new hiring, layoffs, or significant tech demand changes. Items follow:\\\\n\\\\n' + $json.items.map(i => '- ' + i.title + ': ' + (i.contentSnippet || i.content || '')).join('\\\\n') }}\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        880,
+        -32
+      ],
+      "id": "c2cc3bff-899a-42f3-bcd1-b62ea2c06ddc",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "PafGXcQjeNmsuewz",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "lalithadevi199128@gmail.com",
+        "subject": "=Placement News Digest — {{$now.format(\"dd MMM yyyy\")}}",
+        "emailType": "text",
+        "message": "=Good morning. Today's placement news digest:  {{ $json[\"candidates\"][0][\"content\"][\"parts\"][0][\"text\"] }}  Sent automatically by n8n at 7:00 AM IST.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "c4e10b8e-7a03-42ef-8e55-63aef3131796",
+      "name": "Send a message",
+      "webhookId": "b8f53987-d81d-4912-a9a8-6f953138e1a6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "7bNjOB7mDISC0qZt",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {},
+            {
+              "triggerAtHour": "={{ 0 }}",
+              "triggerAtMinute": "={{ 0 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "16f24ed3-1339-4dbd-8734-334134081a52",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "f09da476-4015-4ab1-b922-7fe80f65c047",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a490d8138580d231b953440cb8095a9c0cf9942368e1b9dc2bd36acec2fbe21"
+  },
+  "id": "nomdX7rjsgjFIAwn",
+  "tags": [
+    {
+      "updatedAt": "2026-05-23T10:40:13.279Z",
+      "createdAt": "2026-05-23T10:40:13.279Z",
+      "id": "BEmtW9JxchRyBXUI",
+      "name": "new msg mail"
+    }
+  ]
+}
